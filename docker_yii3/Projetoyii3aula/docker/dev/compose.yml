@@ -1,0 +1,14 @@
+services:
+  app:
+    user: "root"
+    env_file:
+      - path: ./dev/.env
+      - path: ./dev/override.env
+        required: false
+    ports:
+      - "${DEV_PORT:-8080}:80"
+    volumes:
+      - ../runtime:/app/runtime
+      - caddy_data:/data/caddy
+      - caddy_config:/config/caddy
+    tty: true

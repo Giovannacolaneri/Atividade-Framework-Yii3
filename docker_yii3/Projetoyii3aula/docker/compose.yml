@@ -1,0 +1,21 @@
+services:
+  app: &appconfig
+    build:
+      context: ../
+      dockerfile: docker/Dockerfile
+      target: dev
+      args:
+        - USER_ID=${UID:-1000}
+        - GROUP_ID=${GID:-1000}
+        - USER_NAME=appuser
+        - GROUP_NAME=appgroup
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - ../:/app
+      - caddy_data:/data/caddy
+      - caddy_config:/config/caddy
+
+volumes:
+  caddy_data:
+  caddy_config:
